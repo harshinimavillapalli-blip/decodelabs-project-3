@@ -1,0 +1,31 @@
+import string
+import secrets
+import math
+
+def generate_password(length):
+    characters = string.ascii_letters + string.digits + string.punctuation
+
+    password = ''.join(secrets.choice(characters) for _ in range(length))
+
+    entropy = length * math.log2(len(characters))
+
+    return password, entropy
+
+try:
+    length = int(input("Enter password length: "))
+
+    if length < 8:
+        print("Password length should be at least 8 characters.")
+    else:
+        password, entropy = generate_password(length)
+
+        print("\nGenerated Password:", password)
+        print("Entropy: {:.2f} bits".format(entropy))
+
+        if entropy >= 80:
+            print("Security Level: Strong")
+        else:
+            print("Security Level: Moderate")
+
+except ValueError:
+    print("Please enter a valid integer.")
